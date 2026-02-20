@@ -23,7 +23,16 @@ const User = sequelize.define('User', {
   rol: {
     type: DataTypes.ENUM('ADMIN_ROLE', 'USER_ROLE'),
     defaultValue: 'USER_ROLE'
+  },
+  resetToken: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  resetTokenExpiration: {
+    type: DataTypes.DATE,
+    allowNull: true
   }
+
 });
 
 export default User;
