@@ -30,9 +30,18 @@ const User = sequelize.define('User', {
   },
   resetTokenExpiration: {
     type: DataTypes.DATE,
+    allowNull:
+      true
+  },
+  emailVerified: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+
+  emailToken: {
+    type: DataTypes.STRING,
     allowNull: true
   }
-
 });
 
 export default User;
