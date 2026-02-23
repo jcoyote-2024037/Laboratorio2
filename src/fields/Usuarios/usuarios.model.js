@@ -1,0 +1,47 @@
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../../../configs/db.js';
+
+const User = sequelize.define('User', {
+  nombre: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  username: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false
+  },
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  rol: {
+    type: DataTypes.ENUM('ADMIN_ROLE', 'USER_ROLE'),
+    defaultValue: 'USER_ROLE'
+  },
+  resetToken: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  resetTokenExpiration: {
+    type: DataTypes.DATE,
+    allowNull:
+      true
+  },
+  emailVerified: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+
+  emailToken: {
+    type: DataTypes.STRING,
+    allowNull: true
+  }
+});
+
+export default User;
