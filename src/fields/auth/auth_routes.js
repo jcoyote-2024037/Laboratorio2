@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import {
     login, register, requestPasswordReset,
-    resetPassword
+    resetPassword, verifyEmail
 } from './auth_controller.js'
 
 const router = Router()
@@ -28,6 +28,6 @@ router.get('/reset-password', (req, res) => {
 });
 
 router.post('/reset-password', resetPassword);
-
+router.get('/verify-email', verifyEmail);
 
 export default router

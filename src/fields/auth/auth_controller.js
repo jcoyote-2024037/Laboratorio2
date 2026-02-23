@@ -7,30 +7,51 @@ import nodemailer from 'nodemailer';
 
 export const register = async (req, res) => {
   try {
+
     const { nombre, username, email, password } = req.body;
 
     const encryptedPassword = await bcrypt.hash(password, 10);
+
+    const emailToken = crypto.randomBytes(32).toString('hex');
 
     const user = await User.create({
       nombre,
       username,
       email,
-      password: encryptedPassword
+      password: encryptedPassword,
+      emailToken,
+      emailVerified: false
     });
 
-    user.password = undefined;
+    // ---------- EMAIL ----------
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      },
+      tls: { rejectUnauthorized: false }
+    });
+
+    const verifyLink =
+      `http://localhost:3006/gestionopinion/v1/auth/verify-email?token=${emailToken}`;
+
+    await transporter.sendMail({
+      to: email,
+      subject: 'Verifica tu correo',
+      html: `
+        <h2>Bienvenido</h2>
+        <p>Haz click para verificar tu cuenta:</p>
+        <a href="${verifyLink}">${verifyLink}</a>
+      `
+    });
 
     res.status(201).json({
-      success: true,
-      message: 'Usuario registrado',
-      data: user
+      message: 'Usuario creado. Revisa tu correo para verificar la cuenta.'
     });
 
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: error.message
-    });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -49,6 +70,11 @@ export const login = async (req, res) => {
 
     if (!user) {
       return res.status(400).json({ message: 'Credenciales inválidas' });
+    }
+    if (!user.emailVerified) {
+      return res.status(403).json({
+        message: 'Debes verificar tu correo primero'
+      });
     }
 
     const validPassword = await bcrypt.compare(password, user.password);
@@ -100,7 +126,7 @@ export const requestPasswordReset = async (req, res) => {
       }
     });
 
-const resetLink = `http://localhost:3006/gestionopinion/v1/auth/reset-password?token=${resetToken}`;
+    const resetLink = `http://localhost:3006/gestionopinion/v1/auth/reset-password?token=${resetToken}`;
 
     await transporter.sendMail({
       to: user.email,
@@ -151,4 +177,29 @@ export const resetPassword = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+export const verifyEmail = async (req, res) => {
+
+  try {
+
+    const { token } = req.query;
+
+    const user = await User.findOne({ where: { emailToken: token } });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Token inválido' });
+    }
+
+    user.emailVerified = true;
+    user.emailToken = null;
+
+    await user.save();
+
+    res.json({ message: 'Correo verificado correctamente' });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+
 };
