@@ -1,0 +1,538 @@
+{
+  "info": {
+    "_postman_id": "f35d76a5-48bc-4f25-93aa-13c8710c35b1",
+    "name": "GestorOpinion",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48329983",
+    "_collection_link": "https://go.postman.co/collection/48329983-f35d76a5-48bc-4f25-93aa-13c8710c35b1?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Autenticacion",
+      "item": [
+        {
+          "name": "Registrarse",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Pablo\",\r\n  \"username\": \"PabloD\",\r\n  \"email\": \"pablodeleonwxz@gmail.com\",\r\n  \"password\": \"12345\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/gestionopinion/v1/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "gestionopinion",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"identifier\": \"pablodeleonwxz@gmail.com\",\r\n  \"password\": \"12345\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/gestionopinion/v1/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "gestionopinion",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ver Perfil",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/gestionopinion/v1/auth",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "gestionopinion",
+                "v1",
+                "auth"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar Perfil",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Pablo De Leon\",\r\n  \"username\": \"PabloDL\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/gestionopinion/v1/auth",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "gestionopinion",
+                "v1",
+                "auth"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cambiar Contraseña",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"currentPassword\": \"123456\",\r\n  \"newPassword\": \"654321\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/gestionopinion/v1/auth/change-password",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "gestionopinion",
+                "v1",
+                "auth",
+                "change-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Solicitud de Reseteo de Contraseña",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"pablodeleonwxz@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/gestionopinion/v1/auth/request-reset",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "gestionopinion",
+                "v1",
+                "auth",
+                "request-reset"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verificacion de Solicitud / Token",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"token\": \"a6cc10c87bb37d6c76f1c35e36a0e79f671237da86f804508d3321e0237923e0\",\r\n  \"newPassword\": \"12345\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/gestionopinion/v1/auth/reset-password",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "gestionopinion",
+                "v1",
+                "auth",
+                "reset-password"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Gestionar Publicaciones",
+      "item": [
+        {
+          "name": "Crear Publicacion",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"titulo\": \"Mi primera opinión\",\r\n  \"categoria\": \"Tecnología\",\r\n  \"contenido\": \"Creo que la IA está cambiando el mundo.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/gestionopinion/v1/publicaciones",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "gestionopinion",
+                "v1",
+                "publicaciones"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ver Publicaciones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar Mi Publicacion",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"titulo\": \"Título actualizado\",\r\n  \"categoria\": \"Ciencia\",\r\n  \"contenido\": \"Contenido actualizado de la publicación\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/gestionopinion/v1/publicaciones/6997c4d52d942ad935c3af0c",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "gestionopinion",
+                "v1",
+                "publicaciones",
+                "6997c4d52d942ad935c3af0c"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar Mi Publicacion",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/gestionopinion/v1/publicaciones/6997c4d52d942ad935c3af0c",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "gestionopinion",
+                "v1",
+                "publicaciones",
+                "6997c4d52d942ad935c3af0c"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Comentarios",
+      "item": [
+        {
+          "name": "Añadir Comentario",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"contenido\": \"Estoy de acuerdo con esta opinión\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/gestionopinion/v1/publicaciones/699803abf43c2f807e9c4171/Comentarios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "gestionopinion",
+                "v1",
+                "publicaciones",
+                "699803abf43c2f807e9c4171",
+                "Comentarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar Comentario",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"contenido\": \"Comentario corregido\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/gestionopinion/v1/publicaciones/6997ce9e64f478db0ee414f1/comentarios/6997cebd64f478db0ee414f4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "gestionopinion",
+                "v1",
+                "publicaciones",
+                "6997ce9e64f478db0ee414f1",
+                "comentarios",
+                "6997cebd64f478db0ee414f4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar Comentario",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"contenido\": \"Comentario corregido\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3006/gestionopinion/v1/publicaciones/6997ce9e64f478db0ee414f1/comentarios/6997cebd64f478db0ee414f4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "gestionopinion",
+                "v1",
+                "publicaciones",
+                "6997ce9e64f478db0ee414f1",
+                "comentarios",
+                "6997cebd64f478db0ee414f4"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
